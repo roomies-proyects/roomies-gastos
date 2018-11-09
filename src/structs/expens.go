@@ -6,10 +6,10 @@ import "github.com/roomies-proyects/roomies-gastos/src/db"
 type Expens struct {
 	tableName   struct{} `sql:"expenses"`
 	ID          int      `sql:",pk"`
-	Description string
-	Cost        float64
-	RegistredBy int64
-	TypeCost    int8
+	Description string   `json:"description"`
+	Cost        string   `json:"cost"`
+	RegistredBy string   `json:"registed_by"`
+	TypeCost    string   `json:"type_cost"`
 }
 
 //Save se guarda

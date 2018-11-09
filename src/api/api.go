@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/roomies-proyects/roomies-gastos/src/structs"
 )
@@ -19,14 +21,16 @@ func main() {
 }
 
 func newExpens(c *gin.Context) {
-	e := structs.Expens{Description: "500", Cost: 1, TypeCost: 1, RegistredBy: 1}
-	err := e.Save()
-	if err != nil {
-		c.String(400, "400-Bad-Request"+err.Error())
+	var json structs.Expens
+	if err := c.ShouldBindJSON(&json); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(200, gin.H{
-		"res": "Se a guardado el gasto",
-	})
-	return
+
+	if err := json.Save(); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error inserting": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "inserted correctly"})
 }
