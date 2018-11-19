@@ -7,8 +7,9 @@ type Expens struct {
 	tableName   struct{} `sql:"expenses"`
 	ID          int      `sql:",pk"`
 	Description string   `json:"description"`
-	Cost        string   `json:"cost"`
-	RegistredBy string   `json:"registed_by"`
+	Cost        float64  `json:"cost"`
+	RegistredBy string   `json:"registred_by"`
+	State       string   `json:"state"`
 	TypeCost    string   `json:"type_cost"`
 }
 
